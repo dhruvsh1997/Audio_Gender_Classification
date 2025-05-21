@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout repo again in this job
+      # Checkout repo again in this jobs
       - name: 📥 Checkout Code
         uses: actions/checkout@v3
 
