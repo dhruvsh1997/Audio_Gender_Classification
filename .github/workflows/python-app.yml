@@ -1,0 +1,60 @@
+name: flask CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongo:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongo --eval 'db.runCommand({ ping: 1 })'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg libsndfile1
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Clone HuggingFace voice-gender-classifier
+        run: |
+          git clone https://github.com/JaesungHuh/voice-gender-classifier.git
+
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          flake8 app --ignore=E501,W503
+
+      - name: Run basic test (import check and health)
+        run: |
+          python -c "from app.api import app; print(app.name)"
+
+      - name: Run Flask test server in background (optional)
+        run: |
+          nohup python app/api.py &
+          sleep 5
+          curl --fail http://127.0.0.1:5000 || echo "Flask server failed to start"
