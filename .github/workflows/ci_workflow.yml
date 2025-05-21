@@ -1,4 +1,4 @@
-name: Voice Gender Detection CI
+name: flask CI
 
 on:
   push:
