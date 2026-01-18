@@ -4,3 +4,4 @@ pymongo==4.3.3
 torchaudio
 werkzeug==2.1.0
 numpy
+scipy
