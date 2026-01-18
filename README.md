@@ -55,7 +55,7 @@ All requests are logged into **MongoDB** with:
 
 ## 🛠️ Setup Without Docker
 
-### 1. Clone Repository & Create Virtual Environment
+### 1. Clone Repository & Create Virtual Environments
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/voice-gender-api.git
