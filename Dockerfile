@@ -1,4 +1,4 @@
-# Use official Python images
+# Use official Python image
 FROM python:3.9-slim
 
 # Set working directory
