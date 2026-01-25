@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 # Clone the voice-gender-classifier repository
 RUN git clone https://github.com/JaesungHuh/voice-gender-classifier.git
 
-# Copy application file
+# Copy application files
 COPY app/ ./app/
 COPY requirements.txt ./
 
